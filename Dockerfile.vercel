@@ -12,6 +12,7 @@ COPY src src
 
 RUN ./mvnw clean package -DskipTests
 
+
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
@@ -22,4 +23,4 @@ ENV PORT=8080
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["/opt/java/openjdk/bin/java", "-jar", "/app/app.jar"]
