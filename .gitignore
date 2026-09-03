@@ -1,8 +1,8 @@
 target/
 data/
-.env
-*.env
+*.class
 *.log
 .idea/
-.vscode/
 *.iml
+.vscode/
+.DS_Store

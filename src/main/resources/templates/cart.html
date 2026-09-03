@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: pageHead('Your Cart')}"></head>
 <body>
@@ -32,7 +32,7 @@
                         <a th:href="@{/product/{id}(id=${item.product.id})}" th:text="${item.product.name}">Name</a>
                     </div>
                 </td>
-                <td th:text="'â‚¹' + ${#numbers.formatDecimal(item.product.price, 1, 2)}">â‚¹0.00</td>
+                <td th:text="'₹' + ${#numbers.formatDecimal(item.product.price, 1, 2)}">₹0.00</td>
                 <td>
                     <form th:action="@{/cart/update}" method="post">
                         <input type="hidden" name="productId" th:value="${item.product.id}"/>
@@ -40,7 +40,7 @@
                                min="1" th:max="${item.product.stock}" data-auto-submit/>
                     </form>
                 </td>
-                <td th:text="'â‚¹' + ${#numbers.formatDecimal(item.product.price * item.quantity, 1, 2)}">â‚¹0.00</td>
+                <td th:text="'₹' + ${#numbers.formatDecimal(item.product.price * item.quantity, 1, 2)}">₹0.00</td>
                 <td>
                     <form th:action="@{/cart/remove}" method="post">
                         <input type="hidden" name="productId" th:value="${item.product.id}"/>
@@ -54,7 +54,7 @@
         <div class="cart-summary">
             <div class="cart-summary-row total">
                 <span>Total</span>
-                <span th:text="'â‚¹' + ${#numbers.formatDecimal(total, 1, 2)}">â‚¹0.00</span>
+                <span th:text="'₹' + ${#numbers.formatDecimal(total, 1, 2)}">₹0.00</span>
             </div>
             <a class="btn btn-primary btn-block" style="margin-top:14px" th:href="@{/checkout}">Proceed to Checkout</a>
             <form th:action="@{/cart/clear}" method="post" style="margin-top:10px">
@@ -68,4 +68,3 @@
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
-

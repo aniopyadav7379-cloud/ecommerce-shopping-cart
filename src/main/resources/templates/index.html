@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: pageHead('Shop')}"></head>
 <body>
@@ -9,7 +9,7 @@
          style="background-image: url(/assets/img/hero/hero-1.jpg)">
         <div class="hero-banner-content">
             <h1>Everything you need, delivered.</h1>
-            <p>Quality electronics, gear, and everyday essentials â€” in stock and ready to ship.</p>
+            <p>Quality electronics, gear, and everyday essentials — in stock and ready to ship.</p>
             <a class="btn btn-primary" href="#catalogue">Shop Now</a>
         </div>
     </div>
@@ -27,7 +27,7 @@
                 <h3><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}">Product name</a></h3>
                 <p class="product-desc" th:text="${product.description}">Description</p>
                 <div class="product-meta">
-                    <span class="price" th:text="'â‚¹' + ${#numbers.formatDecimal(product.price, 1, 2)}">â‚¹0.00</span>
+                    <span class="price" th:text="'₹' + ${#numbers.formatDecimal(product.price, 1, 2)}">₹0.00</span>
                     <span class="stock-badge" th:classappend="${product.stock == 0 ? 'low' : ''}"
                           th:text="${product.stock > 0 ? product.stock + ' in stock' : 'Out of stock'}">In stock</span>
                 </div>
@@ -54,4 +54,3 @@
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>
-

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: pageHead('Checkout')}"></head>
 <body>
@@ -39,12 +39,12 @@
         <div class="order-summary">
             <h2>Order Summary</h2>
             <div class="summary-item" th:each="item : ${items}">
-                <span th:text="${item.product.name} + ' Ã— ' + ${item.quantity}">Item</span>
-                <span th:text="'â‚¹' + ${#numbers.formatDecimal(item.product.price * item.quantity, 1, 2)}">â‚¹0.00</span>
+                <span th:text="${item.product.name} + ' × ' + ${item.quantity}">Item</span>
+                <span th:text="'₹' + ${#numbers.formatDecimal(item.product.price * item.quantity, 1, 2)}">₹0.00</span>
             </div>
             <div class="cart-summary-row total">
                 <span>Total</span>
-                <span th:text="'â‚¹' + ${#numbers.formatDecimal(total, 1, 2)}">â‚¹0.00</span>
+                <span th:text="'₹' + ${#numbers.formatDecimal(total, 1, 2)}">₹0.00</span>
             </div>
         </div>
     </div>
@@ -53,4 +53,3 @@
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>
-
