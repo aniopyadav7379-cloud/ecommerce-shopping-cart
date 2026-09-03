@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="pageHead(title)">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title th:text="${title} + ' | ShopCart'">ShopCart</title>
+        <link rel="icon" type="image/png" th:href="@{/assets/img/favicon.png}"/>
+        <link rel="stylesheet" th:href="@{/assets/css/fontAwesome5Pro.css}"/>
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    </th:block>
+</head>
+<body>
+<header class="site-header" th:fragment="header(cartItemCount)">
+    <div class="header-inner container">
+        <a class="logo-link" th:href="@{/}">
+            <img class="logo-img" th:src="@{/assets/img/logo/logo.png}" alt="ShopCart"/>
+        </a>
+        <form class="search-form" th:action="@{/}" method="get">
+            <input type="text" name="q" placeholder="Search products..." th:value="${query}"/>
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <a class="cart-link" th:href="@{/cart}">
+            <i class="fas fa-shopping-cart"></i>
+            Cart
+            <span class="cart-badge" th:text="${cartItemCount}">0</span>
+        </a>
+    </div>
+</header>
+<footer class="site-footer" th:fragment="footer">
+    <div class="container footer-brands">
+        <img th:src="@{/assets/img/brand/brand-1.png}" alt="Brand"/>
+        <img th:src="@{/assets/img/brand/brand-2.png}" alt="Brand"/>
+        <img th:src="@{/assets/img/brand/brand-3.png}" alt="Brand"/>
+        <img th:src="@{/assets/img/brand/brand-4.png}" alt="Brand"/>
+        <img th:src="@{/assets/img/brand/brand-5.png}" alt="Brand"/>
+    </div>
+    <div class="container footer-bottom">
+        <span>&copy; 2026 ShopCart. Built for demonstration purposes.</span>
+        <span class="footer-social">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+        </span>
+    </div>
+</footer>
+</body>
+</html>
+

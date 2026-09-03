@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: pageHead('Checkout')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header(${cartItemCount})}"></header>
+
+<main class="container">
+    <h1 class="page-title">Checkout</h1>
+
+    <div th:if="${items.isEmpty()}" class="empty-state">
+        <h2>Your cart is empty</h2>
+        <p>Add some products before checking out.</p>
+        <a class="btn btn-primary" th:href="@{/}">Continue Shopping</a>
+    </div>
+
+    <div class="checkout-layout" th:if="${!items.isEmpty()}">
+        <div class="checkout-form">
+            <h2>Shipping &amp; Contact Details</h2>
+            <form th:action="@{/checkout}" th:object="${checkoutRequest}" method="post">
+                <div class="form-group">
+                    <label for="customerName">Full Name</label>
+                    <input type="text" id="customerName" th:field="*{customerName}"/>
+                    <div class="field-error" th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" th:field="*{email}"/>
+                    <div class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="shippingAddress">Shipping Address</label>
+                    <textarea id="shippingAddress" rows="4" th:field="*{shippingAddress}"></textarea>
+                    <div class="field-error" th:if="${#fields.hasErrors('shippingAddress')}" th:errors="*{shippingAddress}"></div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+            </form>
+        </div>
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-item" th:each="item : ${items}">
+                <span th:text="${item.product.name} + ' Ã— ' + ${item.quantity}">Item</span>
+                <span th:text="'â‚¹' + ${#numbers.formatDecimal(item.product.price * item.quantity, 1, 2)}">â‚¹0.00</span>
+            </div>
+            <div class="cart-summary-row total">
+                <span>Total</span>
+                <span th:text="'â‚¹' + ${#numbers.formatDecimal(total, 1, 2)}">â‚¹0.00</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
+

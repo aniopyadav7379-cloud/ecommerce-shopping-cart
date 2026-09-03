@@ -1,0 +1,13 @@
+package com.example.ecommerce.exception;
+
+public enum ErrorCode {
+    PRODUCT_NOT_FOUND,
+    INVALID_QUANTITY,
+    INSUFFICIENT_STOCK,
+    CART_ITEM_NOT_FOUND,
+    EMPTY_CART,
+    INVALID_CHECKOUT_DATA,
+    ORDER_NOT_FOUND,
+    VALIDATION_ERROR,
+    INTERNAL_ERROR
+}

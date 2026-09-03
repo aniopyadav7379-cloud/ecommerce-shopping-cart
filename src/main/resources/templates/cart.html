@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: pageHead('Your Cart')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header(${cartItemCount})}"></header>
+
+<main class="container">
+    <h1 class="page-title">Your Cart</h1>
+
+    <div th:if="${items.isEmpty()}" class="empty-state">
+        <h2>Your cart is empty</h2>
+        <p>Browse the catalogue and add something you like.</p>
+        <a class="btn btn-primary" th:href="@{/}">Continue Shopping</a>
+    </div>
+
+    <div th:if="${!items.isEmpty()}">
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td>
+                    <div class="cart-product-cell">
+                        <img th:src="${item.product.imageUrl}" th:alt="${item.product.name}"/>
+                        <a th:href="@{/product/{id}(id=${item.product.id})}" th:text="${item.product.name}">Name</a>
+                    </div>
+                </td>
+                <td th:text="'â‚¹' + ${#numbers.formatDecimal(item.product.price, 1, 2)}">â‚¹0.00</td>
+                <td>
+                    <form th:action="@{/cart/update}" method="post">
+                        <input type="hidden" name="productId" th:value="${item.product.id}"/>
+                        <input type="number" name="quantity" class="qty-input" th:value="${item.quantity}"
+                               min="1" th:max="${item.product.stock}" data-auto-submit/>
+                    </form>
+                </td>
+                <td th:text="'â‚¹' + ${#numbers.formatDecimal(item.product.price * item.quantity, 1, 2)}">â‚¹0.00</td>
+                <td>
+                    <form th:action="@{/cart/remove}" method="post">
+                        <input type="hidden" name="productId" th:value="${item.product.id}"/>
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <div class="cart-summary-row total">
+                <span>Total</span>
+                <span th:text="'â‚¹' + ${#numbers.formatDecimal(total, 1, 2)}">â‚¹0.00</span>
+            </div>
+            <a class="btn btn-primary btn-block" style="margin-top:14px" th:href="@{/checkout}">Proceed to Checkout</a>
+            <form th:action="@{/cart/clear}" method="post" style="margin-top:10px">
+                <button type="submit" class="btn btn-secondary btn-block">Clear Cart</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
+

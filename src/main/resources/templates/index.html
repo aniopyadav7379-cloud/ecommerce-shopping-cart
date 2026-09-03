@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: pageHead('Shop')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header(${cartItemCount})}"></header>
+
+<main class="container">
+    <div class="hero-banner" th:if="${query == null or query.isEmpty()}"
+         style="background-image: url(/assets/img/hero/hero-1.jpg)">
+        <div class="hero-banner-content">
+            <h1>Everything you need, delivered.</h1>
+            <p>Quality electronics, gear, and everyday essentials â€” in stock and ready to ship.</p>
+            <a class="btn btn-primary" href="#catalogue">Shop Now</a>
+        </div>
+    </div>
+
+    <h1 class="page-title" id="catalogue" th:if="${query != null and !query.isEmpty()}"
+        th:text="'Search results for &quot;' + ${query} + '&quot;'">Search results</h1>
+    <h1 class="page-title" id="catalogue" th:if="${query == null or query.isEmpty()}">Product Catalogue</h1>
+
+    <div class="product-grid" th:if="${!products.isEmpty()}">
+        <div class="product-card" th:each="product : ${products}">
+            <a th:href="@{/product/{id}(id=${product.id})}">
+                <img th:src="${product.imageUrl}" th:alt="${product.name}"/>
+            </a>
+            <div class="product-card-body">
+                <h3><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}">Product name</a></h3>
+                <p class="product-desc" th:text="${product.description}">Description</p>
+                <div class="product-meta">
+                    <span class="price" th:text="'â‚¹' + ${#numbers.formatDecimal(product.price, 1, 2)}">â‚¹0.00</span>
+                    <span class="stock-badge" th:classappend="${product.stock == 0 ? 'low' : ''}"
+                          th:text="${product.stock > 0 ? product.stock + ' in stock' : 'Out of stock'}">In stock</span>
+                </div>
+                <div class="card-actions">
+                    <a class="btn btn-secondary" th:href="@{/product/{id}(id=${product.id})}">View</a>
+                    <form th:action="@{/product/{id}/add-to-cart(id=${product.id})}" method="post" style="flex:1">
+                        <input type="hidden" name="quantity" value="1"/>
+                        <button type="submit" class="btn btn-primary btn-block" th:disabled="${product.stock == 0}">
+                            Add to Cart
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="empty-state" th:if="${products.isEmpty()}">
+        <h2>No products found</h2>
+        <p>Try a different search term.</p>
+        <a class="btn btn-primary" th:href="@{/}">Back to catalogue</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
+

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: pageHead(${product.name})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header(${cartItemCount})}"></header>
+
+<main class="container">
+    <p><a th:href="@{/}">&larr; Back to catalogue</a></p>
+
+    <div class="product-detail">
+        <img th:src="${product.imageUrl}" th:alt="${product.name}"/>
+        <div>
+            <h1 th:text="${product.name}">Product name</h1>
+            <p th:text="${product.description}">Description</p>
+            <p class="price" th:text="'â‚¹' + ${#numbers.formatDecimal(product.price, 1, 2)}">â‚¹0.00</p>
+            <p>
+                <span class="stock-badge" th:classappend="${product.stock == 0 ? 'low' : ''}"
+                      th:text="${product.stock > 0 ? product.stock + ' units available' : 'Out of stock'}">In stock</span>
+            </p>
+
+            <form th:action="@{/product/{id}/add-to-cart(id=${product.id})}" method="post"
+                  th:if="${product.stock > 0}">
+                <div class="qty-row">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1"
+                           th:max="${product.stock}" data-qty-input/>
+                </div>
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </form>
+
+            <div th:if="${product.stock == 0}">
+                <button class="btn btn-primary" disabled>Out of Stock</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
+

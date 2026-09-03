@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: pageHead('Order Confirmed')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header(${cartItemCount})}"></header>
+
+<main class="container">
+    <div class="confirmation-box">
+        <div class="confirmation-icon">&#10003;</div>
+        <h1>Order Confirmed</h1>
+        <p>Thank you, <strong th:text="${order.customerName}">Customer</strong>. Your order has been placed successfully.</p>
+        <p>Order <strong th:text="'#' + ${order.id}">#0</strong> &middot;
+            <span class="status-pill" th:text="${order.status}">CONFIRMED</span></p>
+    </div>
+
+    <div class="order-details">
+        <h2>Order Details</h2>
+        <p><strong>Email:</strong> <span th:text="${order.email}"></span></p>
+        <p><strong>Shipping Address:</strong> <span th:text="${order.shippingAddress}"></span></p>
+        <p><strong>Order Date:</strong>
+            <span th:text="${#temporals.format(order.createdAt, 'dd MMM yyyy, HH:mm')}"></span></p>
+
+        <table class="cart-table" style="margin-top:16px">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.productName}">Product</td>
+                <td th:text="'â‚¹' + ${#numbers.formatDecimal(item.unitPrice, 1, 2)}">â‚¹0.00</td>
+                <td th:text="${item.quantity}">1</td>
+                <td th:text="'â‚¹' + ${#numbers.formatDecimal(item.subtotal, 1, 2)}">â‚¹0.00</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="cart-summary-row total" style="margin-top:10px">
+            <span>Total</span>
+            <span th:text="'â‚¹' + ${#numbers.formatDecimal(order.totalAmount, 1, 2)}">â‚¹0.00</span>
+        </div>
+
+        <a class="btn btn-primary" style="margin-top:20px" th:href="@{/}">Continue Shopping</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
+
